@@ -170,6 +170,7 @@ public class MetricsVisitor extends SubscriptionVisitor {
     FileLinesContext fileLinesContext = fileLinesContextFactory.createFor(inputFile);
     for (int line = 1; line <= linesNumber; line++) {
       fileLinesContext.setIntValue(CoreMetrics.NCLOC_DATA_KEY, line, linesOfCode.contains(line) ? 1 : 0);
+      fileLinesContext.setIntValue(CoreMetrics.EXECUTABLE_LINES_DATA_KEY, line, linesOfCode.contains(line) ? 1 : 0);
       fileLinesContext.setIntValue(CoreMetrics.COMMENT_LINES_DATA_KEY, line, commentLines.contains(line) ? 1 : 0);
     }
     fileLinesContext.save();

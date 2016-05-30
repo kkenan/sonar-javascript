@@ -86,7 +86,7 @@ public class MetricsTest {
     assertThat(getProjectMeasure("violations").getValue()).isEqualTo(0.0);
     // Tests
     assertThat(getProjectMeasure("tests")).isNull();
-    assertThat(getProjectMeasure("coverage")).isNull();
+    assertThat(getProjectMeasure("coverage").getValue()).isEqualTo(0);
   }
 
   @Test

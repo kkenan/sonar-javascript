@@ -56,9 +56,6 @@ public class JavaScriptPlugin extends SonarPlugin {
   public static final String LCOV_IT_REPORT_PATH = PROPERTY_PREFIX + ".lcov.itReportPath";
   public static final String LCOV_IT_REPORT_PATH_DEFAULT_VALUE = "";
 
-  public static final String FORCE_ZERO_COVERAGE_KEY = "sonar.javascript.forceZeroCoverage";
-  public static final String FORCE_ZERO_COVERAGE_DEFAULT_VALUE = "false";
-
   public static final String JQUERY_OBJECT_ALIASES = JQuery.JQUERY_OBJECT_ALIASES;
   public static final String JQUERY_OBJECT_ALIASES_DEFAULT_VALUE = JQuery.JQUERY_OBJECT_ALIASES_DEFAULT_VALUE;
 
@@ -112,15 +109,6 @@ public class JavaScriptPlugin extends SonarPlugin {
         .name("Integration Tests LCOV File")
         .description("Path (absolute or relative) to the file with LCOV data for integration tests.")
         .onQualifiers(Qualifiers.MODULE, Qualifiers.PROJECT)
-        .subCategory(TEST_AND_COVERAGE)
-        .build(),
-
-      PropertyDefinition.builder(FORCE_ZERO_COVERAGE_KEY)
-        .defaultValue(FORCE_ZERO_COVERAGE_DEFAULT_VALUE)
-        .name("Force 0 coverage value")
-        .description("Force coverage to be set to 0 when no report is provided.")
-        .onQualifiers(Qualifiers.MODULE, Qualifiers.PROJECT)
-        .type(PropertyType.BOOLEAN)
         .subCategory(TEST_AND_COVERAGE)
         .build(),
 

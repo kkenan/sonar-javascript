@@ -124,26 +124,17 @@ public class CoverageTest {
       .setProjectKey(Tests.PROJECT_KEY)
       .setProjectName(Tests.PROJECT_KEY)
       .setProjectVersion("1.0")
-      .setSourceDirs(".")
-      .setProperty("sonar.javascript.forceZeroCoverage", "true");
+      .setSourceDirs(".");
 
     Tests.setEmptyProfile(Tests.PROJECT_KEY, Tests.PROJECT_KEY);
     orchestrator.executeBuild(build);
 
-    // NOTE that lines_to_cover is 10 here (instead of 7 in other tests) because this value is equal to NCLOC metric (computed on plugin side)
-    // which counts every line containing code even if it's not executable (e.g. containing just "}").
+    assertThat(getProjectMeasure("coverage").getValue()).isEqualTo(0);
     assertThat(getProjectMeasure("lines_to_cover").getValue()).isEqualTo(10);
     assertThat(getProjectMeasure("uncovered_lines").getValue()).isEqualTo(10);
-    assertThat(getProjectMeasure("it_lines_to_cover").getValue()).isEqualTo(10);
-    assertThat(getProjectMeasure("it_uncovered_lines").getValue()).isEqualTo(10);
-    if (Tests.is_strictly_after_plugin("2.4")) {
-      assertThat(getFileMeasure("coverage_line_hits_data").getData()).startsWith("1=0;2=0;3=0;5=0");
-      assertThat(getFileMeasure("it_coverage_line_hits_data").getData()).startsWith("1=0;2=0;3=0;5=0");
-    }
+    assertThat(getFileMeasure("coverage_line_hits_data").getData()).startsWith("1=0;2=0;3=0;5=0");
     assertThat(getProjectMeasure("conditions_to_cover")).isNull();
-    assertThat(getProjectMeasure("it_conditions_to_cover")).isNull();
     assertThat(getProjectMeasure("uncovered_conditions")).isNull();
-    assertThat(getProjectMeasure("it_uncovered_conditions")).isNull();
   }
 
   @Test
@@ -157,8 +148,9 @@ public class CoverageTest {
     Tests.setEmptyProfile(Tests.PROJECT_KEY, Tests.PROJECT_KEY);
     orchestrator.executeBuild(build);
 
-    assertThat(getProjectMeasure("lines_to_cover")).isNull();
-    assertThat(getProjectMeasure("uncovered_lines")).isNull();
+    assertThat(getProjectMeasure("coverage").getValue()).isEqualTo(0);
+    assertThat(getProjectMeasure("lines_to_cover").getValue()).isEqualTo(10);
+    assertThat(getProjectMeasure("uncovered_lines").getValue()).isEqualTo(10);
     assertThat(getProjectMeasure("conditions_to_cover")).isNull();
     assertThat(getProjectMeasure("uncovered_conditions")).isNull();
   }
