@@ -102,7 +102,7 @@ public class JavaScriptPlugin extends SonarPlugin {
       PropertyDefinition.builder(LCOV_UT_REPORT_PATH)
         .defaultValue(LCOV_UT_REPORT_PATH_DEFAULT_VALUE)
         .name("Unit Tests LCOV File")
-        .description("Path (absolute or relative) to the file with LCOV data for unit tests.")
+        .description("Comma separated list of paths (absolute or relative) to the file with LCOV data for unit tests.")
         .onQualifiers(Qualifiers.MODULE, Qualifiers.PROJECT)
         .subCategory(TEST_AND_COVERAGE)
         .build(),
@@ -110,7 +110,7 @@ public class JavaScriptPlugin extends SonarPlugin {
       PropertyDefinition.builder(LCOV_IT_REPORT_PATH)
         .defaultValue(LCOV_IT_REPORT_PATH_DEFAULT_VALUE)
         .name("Integration Tests LCOV File")
-        .description("Path (absolute or relative) to the file with LCOV data for integration tests.")
+        .description("Comma separated list of paths (absolute or relative) to the file with LCOV data for integration tests.")
         .onQualifiers(Qualifiers.MODULE, Qualifiers.PROJECT)
         .subCategory(TEST_AND_COVERAGE)
         .build(),

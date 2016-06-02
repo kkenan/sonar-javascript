@@ -20,6 +20,7 @@
 package org.sonar.plugins.javascript.lcov;
 
 import com.google.common.collect.ImmutableList;
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,17 +119,22 @@ public abstract class LCOVCoverageSensor implements Sensor {
   protected void saveMeasureFromLCOVFile(SensorContext context) {
     LinkedList<File> lcovFiles=new LinkedList<>();
     for(String reportPath: reportPaths) {
-      String providedPath = settings.getString(reportPath);
-      if (StringUtils.isBlank(providedPath)){
+      String[] providedPaths = settings.getStringArray(reportPath);
+      if (ArrayUtils.isEmpty(providedPaths)) {
         continue;
       }
-      File lcovFile = getIOFile(fileSystem.baseDir(), providedPath);
+      for (String providedPath : providedPaths) {
+        if (StringUtils.isBlank(providedPath)){
+          continue;
+        }
+        File lcovFile = getIOFile(fileSystem.baseDir(), providedPath);
 
-      if (lcovFile.isFile()) {
-        lcovFiles.add(lcovFile);
-      } else {
-        LOG.warn("No coverage information will be saved because LCOV file cannot be found. Provided LCOV file path: {}", providedPath);
-        LOG.warn("Provided LCOV file path: {}. Seek file with path: {}", providedPath, lcovFile.getAbsolutePath());
+        if (lcovFile.isFile()) {
+          lcovFiles.add(lcovFile);
+        } else {
+          LOG.warn("No coverage information will be saved because LCOV file cannot be found. Provided LCOV file path: {}", providedPath);
+          LOG.warn("Provided LCOV file path: {}. Seek file with path: {}", providedPath, lcovFile.getAbsolutePath());
+        }
       }
     }
 
