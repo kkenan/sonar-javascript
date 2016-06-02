@@ -20,7 +20,6 @@
 package org.sonar.plugins.javascript.lcov;
 
 import java.io.File;
-import java.nio.charset.Charset;
 import org.junit.Before;
 import org.junit.Test;
 import org.sonar.api.batch.fs.InputFile;
@@ -31,6 +30,7 @@ import org.sonar.api.batch.sensor.coverage.CoverageType;
 import org.sonar.api.batch.sensor.internal.DefaultSensorDescriptor;
 import org.sonar.api.batch.sensor.internal.SensorContextTester;
 import org.sonar.api.config.Settings;
+import org.sonar.api.internal.google.common.base.Charsets;
 import org.sonar.plugins.javascript.JavaScriptPlugin;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -64,7 +64,7 @@ public class CoverageSensorTest {
       .setLanguage("js")
       .setType(type);
 
-    inputFile.initMetadata(new FileMetadata().readMetadata(inputFile.file(), Charset.defaultCharset()));
+    inputFile.initMetadata(new FileMetadata().readMetadata(inputFile.file(), Charsets.UTF_8));
     context.fileSystem().add(inputFile);
 
     return inputFile;
